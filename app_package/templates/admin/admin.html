@@ -1,0 +1,30 @@
+{% extends "_layout.html" %}
+{% block main %}
+
+<h1>Admin</h1>
+
+
+<h2>Live JSON Monitor</h2>
+<pre id="data-container">{{ completed_data }}</pre>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const ws = new WebSocket(`ws://${window.location.host}/ws`);
+
+        ws.onopen = function() {
+            console.log("WebSocket connection opened");
+        };
+
+        ws.onmessage = function(event) {
+            console.log("---> in ws.onmesage")
+            const data = JSON.parse(event.data);
+            document.getElementById('data-container').textContent = JSON.stringify(data, null, 2);
+        };
+
+        ws.onclose = function() {
+            console.log("WebSocket connection closed");
+        };
+    });
+</script>
+
+{% endblock %}
