@@ -1,13 +1,40 @@
 {% extends "_layout.html" %}
 {% block main %}
+<div class="admin_page">
+
 
 <h1>Admin</h1>
 
 
 <h2>Live JSON Monitor</h2>
-<pre id="data-container">{{ completed_data }}</pre>
+
+<div class="divTable">
+    <table id="complete_table" class="display table nowrap responsive">
+        <tr>
+            <th>Date</th>
+            <th>User ID</th>
+            <th>Status</th>
+            <th>Error</th>
+          </tr>
+          
+        {% for key, value in data_dict.items() %}
+        <tr id='{{ key }}'>
+          <td id="{{ key }}_time_stamp_str">{{ value.time_stamp_str }}</td>
+          <td id="{{ key }}_user_id">{{ value.user_id }}</td>
+          <td id="{{ key }}_apple_service_status">{{ value.apple_service_status }}</td>
+          <td id="{{ key }}_error">{{ value.error }}</td>
+        </tr>
+        {% endfor %}
+    
+      </table> 
+
+</div>
+
 
 <script type="text/javascript">
+
+    const completeTable = document.querySelector("#complete_table")
+
     document.addEventListener("DOMContentLoaded", function () {
         const ws = new WebSocket(`ws://${window.location.host}/ws`);
 
@@ -16,15 +43,26 @@
         };
 
         ws.onmessage = function(event) {
-            console.log("---> in ws.onmesage")
             const data = JSON.parse(event.data);
-            document.getElementById('data-container').textContent = JSON.stringify(data, null, 2);
+
+            for (let item in data){
+                const completed_row = document.getElementById(item);
+                document.getElementById(`${item}_time_stamp_str`).textContent = data[item]['time_stamp_str']
+                document.getElementById(`${item}_user_id`).textContent = data[item]['user_id']
+                document.getElementById(`${item}_apple_service_status`).textContent = data[item]['apple_service_status']
+                document.getElementById(`${item}_error`).textContent = data[item]['error']
+            }    
+            // This would change the contents of a container with the data recieved from the ws socket
+            // document.getElementById('data-container').textContent = JSON.stringify(data, null, 2);
         };
 
         ws.onclose = function() {
             console.log("WebSocket connection closed");
         };
     });
-</script>
 
+
+    </script>
+
+</div>
 {% endblock %}

@@ -24,7 +24,21 @@ def admin():
     with open(path_to_json_complete) as f:
         completed_data = json.load(f)
 
-    return render_template('admin/admin.html', completed_data=completed_data)
+    # data_dict = completed_data.to_dict()
+
+    return render_template('admin/admin.html', completed_data=completed_data, data_dict=completed_data)
+
+
+@bp_admin.route("/admin02", methods=["GET","POST"])
+def admin02():
+    logger_bp_admin.info(f"-- in admin02 page route --")
+
+
+    with open(path_to_json_complete) as f:
+        completed_data = json.load(f)
+
+
+    return render_template('admin/admin02.html', completed_data=completed_data, data_dict=completed_data)
 
 
 @sock.route('/ws')

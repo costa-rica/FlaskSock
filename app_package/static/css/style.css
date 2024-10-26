@@ -1,3 +1,38 @@
+/* Admin Page */
+.admin_page {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+.admin_page .std_frame_light_gray {
+  background-color: var(--color-gray02);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+}
+.admin_page .col_1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 80%;
+}
+.admin_page .title_custom {
+  display: flex;
+  color: var(--color_text_white);
+}
+.admin_page .std_frame_sub {
+  padding: 0.5rem 0;
+  color: var(--color_text_dark);
+}
+.admin_page .divTable {
+  width: 90%;
+}
+.admin_page .divTable table {
+  width: 100%;
+}
+
 * {
   margin: 0;
   padding: 0;
